@@ -5,8 +5,8 @@ using UnityEngine;
 public class GameHandler : MonoBehaviour
 {
 
-    bool emptyCursor = false;
-    GameObject selectedObject;
+    public static bool emptyCursor = true;
+    public static ObjetoSeleccionable selectedObject;
 
     // Start is called before the first frame update
     void Start()
