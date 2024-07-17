@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6277188c0a2531d418e5d50927155af3, type: 3}
+  m_Name: Food1
+  m_EditorClassIdentifier: 
+  eventName: Food
+  eventArt: {fileID: 21300000, guid: ab7db64c45c4d134a8795aaa813455c1, type: 3}
+  initialDialogue:
+    name: <b>Food</b>
+    sentences:
+    - As anyone who knows Mory knows, Mory can't eat or do anything without watching
+      something at the same time.
+    - It's lunchtime and Mory needs to watch a series, movie or video to entertain
+      herself.
+  loseDialogue:
+    name: <b>Nothing to watch</b>
+    sentences:
+    - Mory has nothing to watch so she doesn't enjoy the food at all and spends the
+      whole time overwhelmed and thinking about a thousand matters.
+    - (And in the end she is taken away by the little monkeys T.T)
+  correctObjects:
+  - GGDVD
+  - Tablet
+  correctDialogues:
+  - name: Gilmore Girls DVDs
+    sentences:
+    - Mory quickly grabs her Gilmore Girls DVDs and puts them in the player to watch
+      while Mory and Fred eat.
+    - Mory really enjoys the meal and it makes her feel relaxed and entertained as
+      she and Fred often comment on them as well.
+  - name: Tablet
+    sentences:
+    - Tablet placeholder text1
+    - Tablet placeholder text2

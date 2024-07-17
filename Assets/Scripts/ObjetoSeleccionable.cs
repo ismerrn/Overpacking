@@ -42,6 +42,7 @@ public class ObjetoSeleccionable : MonoBehaviour
             objectIsSelected = true;
             GameHandler.emptyCursor = false;
             GameHandler.selectedObject = this;
+            transform.parent = null;
             foreach (Transform child in transform)
             {
                 RaycastHit hit;
@@ -51,8 +52,6 @@ public class ObjetoSeleccionable : MonoBehaviour
                 {
                     hit.transform.GetComponent<TileBehaviour>().tileIsFree = true;
                 }
-
-
             }
             }
         }
@@ -84,6 +83,7 @@ public class ObjetoSeleccionable : MonoBehaviour
             if (canPlace)
             {
                 Debug.Log("esta entrando en canPlace");
+                
                 objectIsSelected = false;
                 GameHandler.emptyCursor = true;
                 GameHandler.selectedObject = null;
@@ -99,7 +99,8 @@ public class ObjetoSeleccionable : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(mainChild.transform.position, transform.forward, out hit, 20f, layerMask))
                 { 
-                transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, -10);
+                    transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, -10);
+                    transform.parent = hit.transform.parent;
 
                 }
                 foreach (Transform child in transform)

@@ -1400,7 +1400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666706939254657549, guid: 27b592ea2a6c42e409f5412529b41bd9, type: 3}
       propertyPath: scene1StartingDialogue.name
-      value: <Mory>
+      value: <b>Mory</b>
       objectReference: {fileID: 0}
     - target: {fileID: 666706939254657549, guid: 27b592ea2a6c42e409f5412529b41bd9, type: 3}
       propertyPath: stargingDialogue.sentences.Array.size
@@ -1422,7 +1422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 666706939254657549, guid: 27b592ea2a6c42e409f5412529b41bd9, type: 3}
       propertyPath: scene1StartingDialogue.sentences.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 666706939254657549, guid: 27b592ea2a6c42e409f5412529b41bd9, type: 3}
       propertyPath: scene1StargingDialogue.sentences.Array.data[0]

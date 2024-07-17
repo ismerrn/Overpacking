@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - MainHigo
+  - Drawer
   layers:
   - Default
   - TransparentFX
