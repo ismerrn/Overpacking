@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.UIElements.Experimental;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class DialogueManager : MonoBehaviour
     
     public Dialogue scene0StartingDialogue;
     public Dialogue scene1StartingDialogue;
-
+    
 
 
     private Queue<string> sentences;
@@ -23,15 +25,23 @@ public class DialogueManager : MonoBehaviour
 
     private bool canSkip = true;
 
+    public int scene3EventCount=0;
 
     public GameObject scene1dialogue1;
     public GameObject scene1dialogue2;
     public GameObject scene1dialogue3;
     public GameObject scene1dialogue4;
 
+    public GameObject scene3GameplayDialogue;
+    public GameObject scene3EventDialogue1;
+    public GameObject scene3EventDialogue2;
 
+    public bool scene3EventMode = false;
 
+    private bool winDialogueDone = false;
+    private bool loseDialogueDone = false;
 
+    public GameHandler gameHandler;
 
     void Start()
     {
@@ -46,8 +56,6 @@ public class DialogueManager : MonoBehaviour
         {
             StartDialogue(scene1StartingDialogue);
         }
-
-
 
     }
 
@@ -100,7 +108,6 @@ public class DialogueManager : MonoBehaviour
     }
     void EndDialogue()
     {
-        Debug.Log("End of conversation");
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
@@ -140,14 +147,79 @@ public class DialogueManager : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
         }
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            if(winDialogueDone == true)
+            { 
+                winDialogueDone = false;
+                if(GameHandler.eventCounter<=3) //atento checkear este 3. puede estar mal
+                    LoadNextEvent();
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                }
+            }else if(loseDialogueDone==true)
+            {
+                Debug.Log("YOU LOSE");  // aqui hay q hacer q se diplayee el texto de perder
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+            }
 
+        }
     }
+
+    public void EnterEventMode()
+    {
+        scene3EventMode = true;
+        scene3EventDialogue1.SetActive(true);
+        dialogueText = scene3EventDialogue1.transform.Find("Dialogue").GetComponent<TextMeshProUGUI>();
+        nameText = scene3EventDialogue1.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        StartDialogue(GameHandler.chosenEvents[0].initialDialogue);
+    }
+
+    public void LoadNextEvent()
+    {
+        gameHandler.PrepareNextEvent();
+        scene3EventDialogue2.SetActive(false);
+        scene3EventDialogue1.SetActive(true);
+        dialogueText = scene3EventDialogue1.transform.Find("Dialogue").GetComponent<TextMeshProUGUI>();
+        nameText = scene3EventDialogue1.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        StartDialogue(GameHandler.chosenEvents[GameHandler.eventCounter].initialDialogue);
+    }
+    
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0) && canSkip)
         {
+            if (SceneManager.GetActiveScene().buildIndex == 2 && scene3EventMode==true)
+            {
+                scene3EventDialogue2.SetActive(true);
+                dialogueText = scene3EventDialogue2.transform.Find("Dialogue").GetComponent<TextMeshProUGUI>();
+                scene3EventDialogue2.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = scene3EventDialogue1.transform.Find("Name").GetComponent<TextMeshProUGUI>().text;
+            }
             DisplayNextSentence();
         }
     }
+
+    public void DisplayWinDialogue(int eventCount, int objectIndex)
+    {
+        scene3EventDialogue2.SetActive(false);
+        scene3EventDialogue1.SetActive(true);
+        dialogueText = scene3EventDialogue1.transform.Find("Dialogue").GetComponent<TextMeshProUGUI>();
+        nameText = scene3EventDialogue1.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        StartDialogue(GameHandler.chosenEvents[eventCount].correctDialogues[objectIndex]);
+        winDialogueDone = true;
+    }
+
+    public void DisplayLoseDialogue(int eventCount)
+    {
+        scene3EventDialogue2.SetActive(false);
+        scene3EventDialogue1.SetActive(true);
+        dialogueText = scene3EventDialogue1.transform.Find("Dialogue").GetComponent<TextMeshProUGUI>();
+        nameText = scene3EventDialogue1.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        StartDialogue(GameHandler.chosenEvents[eventCount].loseDialogue);
+        loseDialogueDone = true;
+
+    }
+
 }
