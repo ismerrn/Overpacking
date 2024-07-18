@@ -54,12 +54,14 @@ public class ObjetoSeleccionable : MonoBehaviour
                         if (hit.transform.parent.tag == "AnswerGrid")
                         {
                             GameHandler.answerGridIsEmpty = true;
-                        }
+                            GameHandler.answerObject = null;
+}
                     }
                 }
                 
             }
-            Debug.Log(GameHandler.answerGridIsEmpty);
+            if(GameHandler.answerObject !=null)
+            Debug.Log(GameHandler.answerObject);
             transform.parent = null;
         }
         else if (GameHandler.emptyCursor == false && GameHandler.selectedObject == this)
@@ -67,7 +69,6 @@ public class ObjetoSeleccionable : MonoBehaviour
             bool canPlace = true;
             foreach (Transform child in transform)
             {
-                Debug.Log(child.position);
                 RaycastHit hit;
                  if (Physics.Raycast(child.position, transform.forward, out hit, 20f, layerMask))
                  {
@@ -117,6 +118,7 @@ public class ObjetoSeleccionable : MonoBehaviour
                     if (hit.transform.parent.tag == "AnswerGrid")
                     {
                         GameHandler.answerGridIsEmpty = false;
+                        GameHandler.answerObject = transform;
                     }
 
                 }
@@ -128,7 +130,8 @@ public class ObjetoSeleccionable : MonoBehaviour
                     hit2.transform.GetComponent<TileBehaviour>().tileIsFree = false;
                     }
                 }
-                Debug.Log(GameHandler.answerGridIsEmpty);
+                if (GameHandler.answerObject != null)
+                    Debug.Log(GameHandler.answerObject);
             }
 
 

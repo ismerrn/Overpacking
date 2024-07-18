@@ -7,6 +7,7 @@ public class GameHandler : MonoBehaviour
 
     public static bool emptyCursor = true;
     public static bool answerGridIsEmpty = true;
+    public static Transform answerObject;
     public static ObjetoSeleccionable selectedObject;
 
     public Event[] allRegularEvents;
@@ -47,7 +48,8 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       // if(Input.GetKey(KeyCode.UpArrow))
+       //{ Debug.Log(answerObject); }
     }
 
 
@@ -79,6 +81,35 @@ public class GameHandler : MonoBehaviour
             suitcase.transform.position = newSuitcasePos;
 
         }
+
+    }
+
+    public void PressConfirm()
+    {
+        bool eventPassed = false;
+        if ( answerObject!=null)
+        {
+            for (int i = 0; i < currentEvent.correctObjects.Length; i++) 
+            {
+                if (answerObject.gameObject.tag == currentEvent.correctObjects[i])
+                {
+                    Debug.Log(currentEvent.correctDialogues[i]);
+                    Debug.Log("Win");
+                    eventPassed = true;
+                    break;
+
+                }
+            } 
+            if (eventPassed == false)
+            {
+                Debug.Log(currentEvent.loseDialogue);
+                Debug.Log("Lose"); 
+            }
+          
+        }
+
+
+
 
     }
 }
