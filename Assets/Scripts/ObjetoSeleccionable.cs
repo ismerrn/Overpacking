@@ -8,7 +8,7 @@ public class ObjetoSeleccionable : MonoBehaviour
 {
 
     public bool objectIsSelected = false;
-
+    
 
     public LayerMask layerMask;
     // Start is called before the first frame update
@@ -38,22 +38,29 @@ public class ObjetoSeleccionable : MonoBehaviour
 
     private void OnMouseDown()
     { if (GameHandler.emptyCursor)
-        {
+        {   
             objectIsSelected = true;
             GameHandler.emptyCursor = false;
             GameHandler.selectedObject = this;
-            transform.parent = null;
+            
             foreach (Transform child in transform)
             {
                 RaycastHit hit;
-            if (Physics.Raycast(child.position, transform.forward, out hit, 20f, layerMask))
-            {
-                if (hit.transform.GetComponent<TileBehaviour>() != null && !hit.transform.GetComponent<TileBehaviour>().tileIsFree)
+                if (Physics.Raycast(child.position, transform.forward, out hit, 20f, layerMask))
                 {
-                    hit.transform.GetComponent<TileBehaviour>().tileIsFree = true;
+                    if (hit.transform.GetComponent<TileBehaviour>() != null && !hit.transform.GetComponent<TileBehaviour>().tileIsFree)
+                    {
+                        hit.transform.GetComponent<TileBehaviour>().tileIsFree = true;
+                        if (hit.transform.parent.tag == "AnswerGrid")
+                        {
+                            GameHandler.answerGridIsEmpty = true;
+                        }
+                    }
                 }
+                
             }
-            }
+            Debug.Log(GameHandler.answerGridIsEmpty);
+            transform.parent = null;
         }
         else if (GameHandler.emptyCursor == false && GameHandler.selectedObject == this)
         {
@@ -71,7 +78,13 @@ public class ObjetoSeleccionable : MonoBehaviour
                         canPlace = false;
                         break;
                     }
-                 }
+                    if (hit.transform.parent.tag == "AnswerGrid" && GameHandler.answerGridIsEmpty==false)
+                    {
+                        Debug.Log("no se puede placear por q answergrid ya tiene un objeto");
+                        canPlace = false;
+                        break;
+                    }
+                }
                  else
                  {
                     Debug.Log("esta entrando en el else");
@@ -101,6 +114,10 @@ public class ObjetoSeleccionable : MonoBehaviour
                 { 
                     transform.position = new Vector3(hit.transform.position.x, hit.transform.position.y, -10);
                     transform.parent = hit.transform.parent;
+                    if (hit.transform.parent.tag == "AnswerGrid")
+                    {
+                        GameHandler.answerGridIsEmpty = false;
+                    }
 
                 }
                 foreach (Transform child in transform)
@@ -111,6 +128,7 @@ public class ObjetoSeleccionable : MonoBehaviour
                     hit2.transform.GetComponent<TileBehaviour>().tileIsFree = false;
                     }
                 }
+                Debug.Log(GameHandler.answerGridIsEmpty);
             }
 
 

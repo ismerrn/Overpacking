@@ -6,6 +6,7 @@ public class GameHandler : MonoBehaviour
 {
 
     public static bool emptyCursor = true;
+    public static bool answerGridIsEmpty = true;
     public static ObjetoSeleccionable selectedObject;
 
     public Event[] allRegularEvents;
@@ -18,6 +19,16 @@ public class GameHandler : MonoBehaviour
     private int[] testingIndexes;
 
     public Event currentEvent;
+
+    public GameObject drawer;
+    public GameObject readyButton;
+    public GameObject confirmButton;
+    public GameObject suitcase;
+    public Vector3 newSuitcasePos;
+    public GameObject answerGrid;
+    public GameObject eventText;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +71,13 @@ public class GameHandler : MonoBehaviour
         if(emptyCursor == true)
         {
             Debug.Log("cambiar a modo responder eventos");
+            drawer.SetActive(false);
+            readyButton.SetActive(false);
+            answerGrid.SetActive(true);
+            //eventText.SetActive(true);
+            confirmButton.SetActive(true);
+            suitcase.transform.position = newSuitcasePos;
+
         }
 
     }
