@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueBox
       objectReference: {fileID: 0}
+    - target: {fileID: 3019905882259815351, guid: 5dffd09badc2b3541b0b657234e19091, type: 3}
+      propertyPath: m_text
+      value: Lose Title
+      objectReference: {fileID: 0}
     - target: {fileID: 6435818717672308462, guid: 5dffd09badc2b3541b0b657234e19091, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -509,6 +513,10 @@ PrefabInstance:
     - target: {fileID: 6435818717672308462, guid: 5dffd09badc2b3541b0b657234e19091, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860342070148176583, guid: 5dffd09badc2b3541b0b657234e19091, type: 3}
+      propertyPath: m_text
+      value: LoseText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
